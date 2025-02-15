@@ -1,0 +1,57 @@
+<div class="login-container" [@fadeInOut]>
+  <form [formGroup]="loginForm" (ngSubmit)="onSubmit()" class="login-form">
+    <h2>Sign In</h2>
+    
+    <div class="form-group" [@fadeInOut]>
+      <label for="username">Username</label>
+      <input
+        type="text"
+        id="username"
+        formControlName="username"
+        class="form-control"
+        [class.is-invalid]="loginForm.get('username')?.invalid && loginForm.get('username')?.touched"
+        placeholder="Enter username"
+      >
+      <div class="error-message" *ngIf="loginForm.get('username')?.invalid && loginForm.get('username')?.touched">
+        {{ getErrorMessage('username') }}
+      </div>
+    </div>
+
+    <div class="form-group" [@fadeInOut]>
+      <label for="password">Password</label>
+      <input
+        type="password"
+        id="password"
+        formControlName="password"
+        class="form-control"
+        [class.is-invalid]="loginForm.get('password')?.invalid && loginForm.get('password')?.touched"
+        placeholder="Enter password"
+      >
+      <div class="error-message" *ngIf="loginForm.get('password')?.invalid && loginForm.get('password')?.touched">
+        {{ getErrorMessage('password') }}
+      </div>
+    </div>
+
+    <div class="error-message" *ngIf="errorMessage" [@fadeInOut]>
+      {{ errorMessage }}
+    </div>
+
+    <button 
+      type="submit" 
+      class="submit-button" 
+      [disabled]="loginForm.invalid || isLoading"
+      [class.loading]="isLoading"
+    >
+      <span *ngIf="!isLoading">Sign In</span>
+      <div *ngIf="isLoading" class="spinner">
+        <div class="bounce1"></div>
+        <div class="bounce2"></div>
+        <div class="bounce3"></div>
+      </div>
+    </button>
+
+    <div class="signup-link" [@fadeInOut]>
+      Don't have an account? <a routerLink="/signup">Sign up</a>
+    </div>
+  </form>
+</div>
