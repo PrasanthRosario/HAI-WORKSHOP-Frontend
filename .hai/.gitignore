@@ -1,0 +1,43 @@
+# Git ignore configuration file for a typical web development project
+
+# Output directories containing compiled/built files
+/dist                    # Distribution/production build output
+/tmp                     # Temporary files
+/out-tsc                 # TypeScript compilation output
+/bazel-out               # Bazel build output
+
+# Node.js related
+/node_modules            # Dependencies installed via npm/yarn
+npm-debug.log           # npm error logs
+yarn-error.log          # yarn error logs
+
+# IDE and Editor specific files
+.idea/                  # JetBrains IDE files (WebStorm, IntelliJ, etc)
+.project                # Eclipse project files
+.classpath              # Eclipse classpath file
+.c9/                    # Cloud9 IDE files
+*.launch                # Launch configuration files
+.settings/              # IDE settings
+*.sublime-workspace     # Sublime Text workspace files
+
+# Visual Studio Code specific files
+.vscode/*               # VS Code settings directory
+!.vscode/settings.json  # Include VS Code settings
+!.vscode/tasks.json     # Include VS Code tasks
+!.vscode/launch.json    # Include VS Code launch configurations
+!.vscode/extensions.json # Include VS Code extensions
+.history/*              # VS Code history plugin
+
+# Project specific temporary files
+/.angular/cache         # Angular cache files
+.sass-cache/            # Sass compiler cache
+/connect.lock           # Lock file for connect server
+/coverage              # Test coverage reports
+/libpeerconnection.log # WebRTC connection logs
+testem.log             # Testem logs
+/typings               # TypeScript typings
+
+# Operating System generated files
+.DS_Store              # macOS folder attributes
+Thumbs.db              # Windows thumbnail cache
+.hai/                  # Custom directory to ignore

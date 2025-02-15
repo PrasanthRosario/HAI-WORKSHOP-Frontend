@@ -1,0 +1,53 @@
+/* Styles for the main application container */
+.app-container {
+  /* Ensures the container takes up at least the full viewport height */
+  min-height: 100vh;
+  /* Uses flexbox for centering content */
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  /* Adds padding around the container */
+  padding: 1rem;
+  /* Uses CSS variable for background color to support theming */
+  background-color: var(--primary-bg);
+  /* Sets up positioning context for child elements */
+  position: relative;
+  /* Smooth transition for background color changes */
+  transition: background-color 0.3s ease;
+}
+
+/* Styles for the theme toggle button */
+.theme-toggle {
+  /* Fixed positioning in the top-right corner */
+  position: fixed;
+  top: 1rem;
+  right: 1rem;
+  /* Sets button dimensions */
+  width: 40px;
+  height: 40px;
+  /* Creates circular shape */
+  border-radius: 50%;
+  /* Centers icon/content inside button */
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  /* Sets icon size */
+  font-size: 1.2rem;
+  /* Changes cursor to pointer on hover */
+  cursor: pointer;
+  /* Uses theme variables for colors */
+  background-color: var(--card-bg);
+  color: var(--text-color);
+  border: 1px solid var(--border-color);
+  /* Adds subtle shadow effect */
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+  /* Smooth transition for all property changes */
+  transition: all 0.3s ease;
+  /* Ensures button stays above other content */
+  z-index: 1000;
+
+  /* Scale up button slightly on hover */
+  &:hover {
+    transform: scale(1.1);
+  }
+}

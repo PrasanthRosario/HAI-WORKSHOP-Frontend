@@ -1,0 +1,26 @@
+/* To learn more about this file see: https://angular.io/config/tsconfig. */
+{
+  // Extends the base TypeScript configuration from the root tsconfig.json
+  "extends": "./tsconfig.json",
+
+  // Compiler-specific options for the application
+  "compilerOptions": {
+    // Specifies the output directory for compiled files
+    "outDir": "./out-tsc/app",
+    // No additional type definitions are needed for the app compilation
+    "types": []
+  },
+
+  // Specifies the entry point files that need to be compiled
+  "files": [
+    // The main application entry point
+    "src/main.ts",
+    // Polyfills for browser compatibility
+    "src/polyfills.ts"
+  ],
+
+  // Includes all TypeScript declaration files in the src directory
+  "include": [
+    "src/**/*.d.ts"
+  ]
+}

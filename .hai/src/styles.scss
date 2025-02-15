@@ -1,0 +1,84 @@
+/* CSS Variables and Theming */
+
+/* Root theme variables - Light theme defaults */
+:root {
+  /* Background colors */
+  --primary-bg: #f5f5f5;    /* Main background color */
+  --card-bg: #ffffff;       /* Card/container background */
+  --input-bg: #ffffff;      /* Input field background */
+  --button-bg: #007bff;     /* Button background */
+
+  /* Text colors */
+  --text-color: #333333;    /* Main text color */
+  --button-text: #ffffff;   /* Button text color */
+
+  /* Border colors */
+  --border-color: #e0e0e0;  /* Default border color */
+
+  /* Status colors */
+  --error-color: #dc3545;   /* Error/danger color */
+  --success-color: #28a745; /* Success color */
+}
+
+/* Dark theme overrides */
+[data-theme="dark"] {
+  --primary-bg: #1a1a1a;    /* Dark mode main background */
+  --card-bg: #2d2d2d;       /* Dark mode card background */
+  --text-color: #ffffff;    /* Dark mode text color */
+  --border-color: #404040;  /* Dark mode border color */
+  --input-bg: #3d3d3d;      /* Dark mode input background */
+  --button-bg: #0056b3;     /* Dark mode button color */
+  --button-text: #ffffff;   /* Dark mode button text */
+  --error-color: #dc3545;   /* Error color (unchanged) */
+  --success-color: #28a745; /* Success color (unchanged) */
+}
+
+/* Global Reset and Base Styles */
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+  font-family: 'Montserrat', sans-serif;
+}
+
+/* Body Styles */
+body {
+  background-color: var(--primary-bg);
+  color: var(--text-color);
+  transition: background-color 0.3s ease, color 0.3s ease; /* Smooth theme transition */
+}
+
+/* Input Field Styles */
+input {
+  font-family: 'Montserrat', sans-serif;
+  background-color: var(--input-bg);
+  color: var(--text-color);
+  border: 1px solid var(--border-color);
+  transition: all 0.3s ease; /* Smooth state changes */
+
+  /* Focus state styling */
+  &:focus {
+    outline: none;
+    border-color: var(--button-bg);
+  }
+}
+
+/* Button Styles */
+button {
+  font-family: 'Montserrat', sans-serif;
+  background-color: var(--button-bg);
+  color: var(--button-text);
+  border: none;
+  transition: all 0.3s ease; /* Smooth state changes */
+
+  /* Hover state (except for disabled buttons) */
+  &:hover:not(:disabled) {
+    opacity: 0.9;
+  }
+
+  /* Disabled state styling */
+  &:disabled {
+    opacity: 0.6;
+    cursor: not-allowed;
+  }
+}

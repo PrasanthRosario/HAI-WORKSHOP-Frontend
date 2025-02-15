@@ -1,0 +1,14 @@
+<div class="app-container">
+  <!-- Theme toggle button that switches between light and dark mode -->
+  <!-- Uses conditional rendering to show sun emoji for dark mode and moon emoji for light mode -->
+  <button class="theme-toggle" (click)="toggleTheme()">
+    {{ isDarkMode ? '☀️' : '🌙' }}
+  </button>
+
+  <!-- Custom modal component for displaying popup dialogs -->
+  <app-modal></app-modal>
+
+  <!-- Router outlet for rendering route components -->
+  <!-- Acts as a placeholder where child routes will be displayed -->
+  <router-outlet></router-outlet>
+</div>

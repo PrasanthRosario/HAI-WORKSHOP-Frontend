@@ -1,0 +1,46 @@
+{
+  // VSCode tasks configuration file version
+  "version": "2.0.0",
+  
+  // Array of task configurations
+  "tasks": [
+    {
+      // First task: npm start
+      "type": "npm",                    // Specifies this is an npm task
+      "script": "start",                // The npm script to run
+      "isBackground": true,             // Task runs in the background
+      "problemMatcher": {
+        "owner": "typescript",          // TypeScript is responsible for problem detection
+        "pattern": "$tsc",             // Uses TypeScript compiler pattern matching
+        "background": {
+          "activeOnStart": true,        // Problem matcher is active when task starts
+          "beginsPattern": {
+            "regexp": "(.*?)"           // Pattern to detect when compilation starts
+          },
+          "endsPattern": {
+            "regexp": "bundle generation complete"  // Pattern to detect when compilation ends
+          }
+        }
+      }
+    },
+    {
+      // Second task: npm test
+      "type": "npm",                    // Specifies this is an npm task
+      "script": "test",                 // The npm script to run
+      "isBackground": true,             // Task runs in the background
+      "problemMatcher": {
+        "owner": "typescript",          // TypeScript is responsible for problem detection
+        "pattern": "$tsc",             // Uses TypeScript compiler pattern matching
+        "background": {
+          "activeOnStart": true,        // Problem matcher is active when task starts
+          "beginsPattern": {
+            "regexp": "(.*?)"           // Pattern to detect when compilation starts
+          },
+          "endsPattern": {
+            "regexp": "bundle generation complete"  // Pattern to detect when compilation ends
+          }
+        }
+      }
+    }
+  ]
+}

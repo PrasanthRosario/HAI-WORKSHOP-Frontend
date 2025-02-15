@@ -1,0 +1,27 @@
+# This file is used by the build system to adjust CSS and JS output to support the specified browsers below.
+# For additional information regarding the format and rule options, please see:
+# https://github.com/browserslist/browserslist#queries
+
+# For the full list of supported browsers by the Angular framework, please see:
+# https://angular.io/guide/browser-support
+
+# You can see what browsers were selected by your queries by running:
+#   npx browserslist
+
+# Support the latest version of Chrome
+last 1 Chrome version
+
+# Support the latest version of Firefox
+last 1 Firefox version
+
+# Support the last 2 major versions of Microsoft Edge
+last 2 Edge major versions
+
+# Support the last 2 major versions of Safari
+last 2 Safari major versions
+
+# Support the last 2 major versions of iOS Safari
+last 2 iOS major versions
+
+# Support Firefox Extended Support Release version
+Firefox ESR

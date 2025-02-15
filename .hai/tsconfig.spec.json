@@ -1,0 +1,31 @@
+/* TypeScript Configuration for Testing (tsconfig.spec.json)
+ * This configuration file extends the base TypeScript configuration and adds specific settings for testing.
+ * To learn more about this file see: https://angular.io/config/tsconfig.
+ */
+{
+  // Extends the base TypeScript configuration from tsconfig.json
+  "extends": "./tsconfig.json",
+
+  // Compiler-specific options for test files
+  "compilerOptions": {
+    // Output directory for compiled test files
+    "outDir": "./out-tsc/spec",
+    
+    // Includes type definitions required for testing
+    "types": [
+      "jasmine" // Jasmine testing framework type definitions
+    ]
+  },
+
+  // Specific files that need to be included in the compilation
+  "files": [
+    "src/test.ts",    // Main test setup file
+    "src/polyfills.ts" // Browser polyfills for testing environment
+  ],
+
+  // Pattern matching for test-related files to include
+  "include": [
+    "src/**/*.spec.ts", // All test specification files
+    "src/**/*.d.ts"     // All TypeScript declaration files
+  ]
+}

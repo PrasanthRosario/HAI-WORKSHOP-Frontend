@@ -1,0 +1,23 @@
+{
+  // Visual Studio Code launch configuration file for debugging Angular applications
+  // Documentation: https://go.microsoft.com/fwlink/?linkid=830387
+  "version": "0.2.0",
+  "configurations": [
+    {
+      // Configuration for debugging the Angular development server
+      "name": "ng serve", // Display name in the debug dropdown
+      "type": "pwa-chrome", // Debug using Chrome with PWA support
+      "request": "launch", // Launch a new browser instance
+      "preLaunchTask": "npm: start", // Run 'npm start' before launching
+      "url": "http://localhost:4200/" // URL where the app will be served
+    },
+    {
+      // Configuration for debugging Angular unit tests
+      "name": "ng test", // Display name in the debug dropdown
+      "type": "chrome", // Debug using Chrome
+      "request": "launch", // Launch a new browser instance
+      "preLaunchTask": "npm: test", // Run 'npm test' before launching
+      "url": "http://localhost:9876/debug.html" // Karma test runner URL
+    }
+  ]
+}

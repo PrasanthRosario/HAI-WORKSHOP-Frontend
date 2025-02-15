@@ -1,0 +1,137 @@
+{
+  // Schema definition for Angular CLI configuration
+  "$schema": "./node_modules/@angular/cli/lib/config/schema.json",
+  // Version number of the configuration format
+  "version": 1,
+  // Default directory for new projects
+  "newProjectRoot": "projects",
+  // Project configurations
+  "projects": {
+    "Frontend": {
+      // Defines this as an application project
+      "projectType": "application",
+      // Default schematics configuration
+      "schematics": {
+        "@schematics/angular:component": {
+          // Sets SCSS as default style format for components
+          "style": "scss"
+        }
+      },
+      // Project root directory
+      "root": "",
+      // Source code root directory
+      "sourceRoot": "src",
+      // Prefix for component selectors
+      "prefix": "app",
+      // Build configurations and tools
+      "architect": {
+        "build": {
+          // Angular build configuration
+          "builder": "@angular-devkit/build-angular:browser",
+          "options": {
+            // Output directory for built files
+            "outputPath": "dist/frontend",
+            // Main HTML file
+            "index": "src/index.html",
+            // Main TypeScript entry point
+            "main": "src/main.ts",
+            // Polyfills file for browser compatibility
+            "polyfills": "src/polyfills.ts",
+            // TypeScript configuration file
+            "tsConfig": "tsconfig.app.json",
+            // Style preprocessor language
+            "inlineStyleLanguage": "scss",
+            // Static assets to copy to build output
+            "assets": [
+              "src/favicon.ico",
+              "src/assets"
+            ],
+            // Global styles
+            "styles": [
+              "src/styles.scss"
+            ],
+            // Global scripts
+            "scripts": []
+          },
+          // Environment-specific configurations
+          "configurations": {
+            "production": {
+              // Budget thresholds for bundle sizes
+              "budgets": [
+                {
+                  "type": "initial",
+                  "maximumWarning": "500kb",
+                  "maximumError": "1mb"
+                },
+                {
+                  "type": "anyComponentStyle",
+                  "maximumWarning": "2kb",
+                  "maximumError": "4kb"
+                }
+              ],
+              // Environment file replacement for production
+              "fileReplacements": [
+                {
+                  "replace": "src/environments/environment.ts",
+                  "with": "src/environments/environment.prod.ts"
+                }
+              ],
+              // Enable output hashing for cache busting
+              "outputHashing": "all"
+            },
+            "development": {
+              // Development-specific build options
+              "buildOptimizer": false,
+              "optimization": false,
+              "vendorChunk": true,
+              "extractLicenses": false,
+              "sourceMap": true,
+              "namedChunks": true
+            }
+          },
+          // Default build configuration
+          "defaultConfiguration": "production"
+        },
+        // Development server configuration
+        "serve": {
+          "builder": "@angular-devkit/build-angular:dev-server",
+          "configurations": {
+            "production": {
+              "browserTarget": "Frontend:build:production"
+            },
+            "development": {
+              "browserTarget": "Frontend:build:development"
+            }
+          },
+          "defaultConfiguration": "development"
+        },
+        // Internationalization extraction configuration
+        "extract-i18n": {
+          "builder": "@angular-devkit/build-angular:extract-i18n",
+          "options": {
+            "browserTarget": "Frontend:build"
+          }
+        },
+        // Testing configuration
+        "test": {
+          "builder": "@angular-devkit/build-angular:karma",
+          "options": {
+            "main": "src/test.ts",
+            "polyfills": "src/polyfills.ts",
+            "tsConfig": "tsconfig.spec.json",
+            "karmaConfig": "karma.conf.js",
+            "inlineStyleLanguage": "scss",
+            "assets": [
+              "src/favicon.ico",
+              "src/assets"
+            ],
+            "styles": [
+              "src/styles.scss"
+            ],
+            "scripts": []
+          }
+        }
+      }
+    }
+  }
+}

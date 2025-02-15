@@ -1,0 +1,71 @@
+<!-- Login Component Template -->
+<!-- Main container for the login form with fadeInOut animation -->
+<div class="login-container" [@fadeInOut]>
+  <!-- Reactive form with form group binding -->
+  <form [formGroup]="loginForm" (ngSubmit)="onSubmit()" class="login-form">
+    <h2>Sign In</h2>
+    
+    <!-- Username input field group -->
+    <div class="form-group" [@fadeInOut]>
+      <label for="username">Username</label>
+      <!-- Username input with validation and error styling -->
+      <input
+        type="text"
+        id="username"
+        formControlName="username"
+        class="form-control"
+        [class.is-invalid]="loginForm.get('username')?.invalid && loginForm.get('username')?.touched"
+        placeholder="Enter username"
+      >
+      <!-- Error message display for username validation -->
+      <div class="error-message" *ngIf="loginForm.get('username')?.invalid && loginForm.get('username')?.touched">
+        {{ getErrorMessage('username') }}
+      </div>
+    </div>
+
+    <!-- Password input field group -->
+    <div class="form-group" [@fadeInOut]>
+      <label for="password">Password</label>
+      <!-- Password input with validation and error styling -->
+      <input
+        type="password"
+        id="password"
+        formControlName="password"
+        class="form-control"
+        [class.is-invalid]="loginForm.get('password')?.invalid && loginForm.get('password')?.touched"
+        placeholder="Enter password"
+      >
+      <!-- Error message display for password validation -->
+      <div class="error-message" *ngIf="loginForm.get('password')?.invalid && loginForm.get('password')?.touched">
+        {{ getErrorMessage('password') }}
+      </div>
+    </div>
+
+    <!-- General error message display -->
+    <div class="error-message" *ngIf="errorMessage" [@fadeInOut]>
+      {{ errorMessage }}
+    </div>
+
+    <!-- Submit button with loading state -->
+    <button 
+      type="submit" 
+      class="submit-button" 
+      [disabled]="loginForm.invalid || isLoading"
+      [class.loading]="isLoading"
+    >
+      <!-- Button text when not loading -->
+      <span *ngIf="!isLoading">Sign In</span>
+      <!-- Loading spinner animation -->
+      <div *ngIf="isLoading" class="spinner">
+        <div class="bounce1"></div>
+        <div class="bounce2"></div>
+        <div class="bounce3"></div>
+      </div>
+    </button>
+
+    <!-- Sign up link section -->
+    <div class="signup-link" [@fadeInOut]>
+      Don't have an account? <a routerLink="/signup">Sign up</a>
+    </div>
+  </form>
+</div>

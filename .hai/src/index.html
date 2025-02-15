@@ -1,0 +1,62 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <!-- Character encoding declaration for UTF-8 -->
+  <meta charset="utf-8">
+  
+  <!-- Page title -->
+  <title>Book Store</title>
+  
+  <!-- Base URL for relative paths -->
+  <base href="/">
+  
+  <!-- Viewport settings for responsive design -->
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  
+  <!-- Favicon link -->
+  <link rel="icon" type="image/x-icon" href="favicon.ico">
+  
+  <!-- Google Fonts - Montserrat with various weights -->
+  <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+  
+  <!-- Font Awesome icons library -->
+  <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" rel="stylesheet">
+  
+  <!-- CSS custom properties (variables) for theme management -->
+  <style>
+    /* Light theme variables (default) */
+    :root {
+      --bg-color: #f5f5f5;      /* Background color */
+      --text-color: #333;       /* Text color */
+      --nav-bg: #fff;           /* Navigation background */
+      --card-bg: #fff;          /* Card background */
+      --border-color: #ddd;     /* Border color */
+      --hover-color: #f0f0f0;   /* Hover state color */
+    }
+
+    /* Dark theme variables */
+    body.dark-theme {
+      --bg-color: #1a1a1a;      /* Dark background */
+      --text-color: #fff;       /* Light text */
+      --nav-bg: #2d2d2d;        /* Dark navigation */
+      --card-bg: #333;          /* Dark card background */
+      --border-color: #444;     /* Dark borders */
+      --hover-color: #444;      /* Dark hover state */
+    }
+
+    /* Base body styles */
+    body {
+      margin: 0;
+      padding: 0;
+      font-family: 'Montserrat', sans-serif;
+      background-color: var(--bg-color);
+      color: var(--text-color);
+      transition: all 0.3s ease;  /* Smooth transition for theme changes */
+    }
+  </style>
+</head>
+<body>
+  <!-- Root Angular component -->
+  <app-root></app-root>
+</body>
+</html>

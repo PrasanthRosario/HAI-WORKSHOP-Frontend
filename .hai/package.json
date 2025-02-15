@@ -1,0 +1,56 @@
+{
+  // Project name
+  "name": "frontend",
+  // Project version following semantic versioning
+  "version": "0.0.0",
+  // NPM scripts for various development tasks
+  "scripts": {
+    // Angular CLI command
+    "ng": "ng",
+    // Start development server
+    "start": "ng serve",
+    // Build the application for production
+    "build": "ng build",
+    // Build with watch mode for development
+    "watch": "ng build --watch --configuration development",
+    // Run unit tests
+    "test": "ng test"
+  },
+  // Marks package as private to prevent accidental publishing
+  "private": true,
+  // Production dependencies required to run the application
+  "dependencies": {
+    // Core Angular packages with version 14.1.0
+    "@angular/animations": "^14.1.0",
+    "@angular/common": "^14.1.0",
+    "@angular/compiler": "^14.1.0",
+    "@angular/core": "^14.1.0",
+    "@angular/forms": "^14.1.0",
+    "@angular/platform-browser": "^14.1.0",
+    "@angular/platform-browser-dynamic": "^14.1.0",
+    "@angular/router": "^14.1.0",
+    // Reactive Extensions Library for JavaScript
+    "rxjs": "~7.5.0",
+    // Runtime library for TypeScript
+    "tslib": "^2.3.0",
+    // Zone.js for Angular's change detection
+    "zone.js": "~0.11.4"
+  },
+  // Development dependencies only needed during development
+  "devDependencies": {
+    // Angular build tools and development server
+    "@angular-devkit/build-angular": "^14.1.2",
+    "@angular/cli": "~14.1.2",
+    "@angular/compiler-cli": "^14.1.0",
+    // Testing libraries and tools
+    "@types/jasmine": "~4.0.0",
+    "jasmine-core": "~4.2.0",
+    "karma": "~6.4.0",
+    "karma-chrome-launcher": "~3.1.0",
+    "karma-coverage": "~2.2.0",
+    "karma-jasmine": "~5.1.0",
+    "karma-jasmine-html-reporter": "~2.0.0",
+    // TypeScript compiler
+    "typescript": "~4.7.2"
+  }
+}

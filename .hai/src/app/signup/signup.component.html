@@ -1,0 +1,65 @@
+<!-- Signup Component Template -->
+<!-- Main container for the signup form -->
+<div class="signup-container">
+  <h2>Sign Up</h2>
+  
+  <!-- Signup form using reactive forms with form validation -->
+  <form [formGroup]="signupForm" (ngSubmit)="onSubmit()" class="signup-form">
+    <!-- Username field group -->
+    <div class="form-group">
+      <label for="username">Username</label>
+      <!-- Username input with validation and accessibility attributes -->
+      <input
+        type="text"
+        id="username"
+        formControlName="username"
+        placeholder="Enter your username"
+        autocomplete="username"
+        [class.is-invalid]="signupForm.get('username')?.invalid && signupForm.get('username')?.touched"
+        aria-describedby="username-error"
+      >
+      <!-- Username validation error messages -->
+      <div class="error-message" *ngIf="signupForm.get('username')?.invalid && signupForm.get('username')?.touched" id="username-error">
+        <span *ngIf="signupForm.get('username')?.errors?.['required']">Username is required</span>
+        <span *ngIf="signupForm.get('username')?.errors?.['minlength']">Username must be at least 3 characters</span>
+      </div>
+      <!-- Server-side validation errors for username -->
+      <div class="error-message" *ngIf="validationErrors.username && validationErrors.username.length > 0">
+        {{ validationErrors.username[0] }}
+      </div>
+    </div>
+
+    <!-- Password field group -->
+    <div class="form-group">
+      <label for="password">Password</label>
+      <!-- Password input with validation and accessibility attributes -->
+      <input
+        type="password"
+        id="password"
+        formControlName="password"
+        placeholder="Enter your password"
+        autocomplete="new-password"
+        [class.is-invalid]="signupForm.get('password')?.invalid && signupForm.get('password')?.touched"
+        aria-describedby="password-error"
+      >
+      <!-- Password validation error messages -->
+      <div class="error-message" *ngIf="signupForm.get('password')?.invalid && signupForm.get('password')?.touched" id="password-error">
+        {{ getPasswordValidationMessage() }}
+      </div>
+    </div>
+
+    <!-- Form action buttons -->
+    <div class="form-actions">
+      <!-- Submit button with loading state -->
+      <button type="submit" [disabled]="signupForm.invalid || isSubmitting">
+        {{ isSubmitting ? 'Signing up...' : 'Sign Up' }}
+      </button>
+    </div>
+
+    <!-- Success and error message container with accessibility attributes -->
+    <div class="message-container" role="alert" aria-live="polite">
+      <div class="success-message" *ngIf="successMessage">{{ successMessage }}</div>
+      <div class="error-message" *ngIf="errorMessage">{{ errorMessage }}</div>
+    </div>
+  </form>
+</div>

@@ -1,0 +1,109 @@
+<!-- Dashboard Component Template -->
+<!-- Main container with dynamic dark theme support -->
+<div class="dashboard-container" [class.dark-theme]="isDarkMode$ | async">
+  <!-- Navigation Bar -->
+  <nav class="navbar">
+    <!-- Brand Section with Toggle Button -->
+    <div class="nav-brand">
+      <button class="nav-toggle" (click)="toggleNavbar()">
+        <!-- Dynamic icon that changes between hamburger and close -->
+        <i class="fas" [class.fa-bars]="!isNavOpen" [class.fa-times]="isNavOpen"></i>
+      </button>
+      <h1>Book Store</h1>
+    </div>
+    
+    <!-- Search Section - Toggles visibility based on navbar state -->
+    <div class="search-container" [class.active]="isNavOpen">
+      <input 
+        type="text" 
+        [(ngModel)]="searchQuery" 
+        (input)="onSearch()"
+        placeholder="Search for books..."
+        class="search-input"
+      >
+      <i class="fas fa-search search-icon"></i>
+    </div>
+
+    <!-- Navigation Actions Section -->
+    <div class="nav-actions" [class.active]="isNavOpen">
+      <!-- Orders Button -->
+      <button class="nav-button" routerLink="/orders">
+        <i class="fas fa-shopping-bag"></i>
+        <span>Orders</span>
+      </button>
+      
+      <!-- Cart Button with Item Count Badge -->
+      <button class="nav-button" routerLink="/cart">
+        <i class="fas fa-shopping-cart"></i>
+        <span>Cart</span>
+        <span class="cart-badge" *ngIf="cartItemCount > 0">{{cartItemCount}}</span>
+      </button>
+
+      <!-- User Menu Dropdown -->
+      <div class="user-menu">
+        <button class="nav-button user-button" (click)="toggleUserMenu()">
+          <i class="fas fa-user"></i>
+          <span>{{username}}</span>
+        </button>
+        <!-- Dropdown Menu with Animation -->
+        <div class="dropdown-menu" *ngIf="showUserMenu" [@fadeInOut]>
+          <!-- Theme Toggle Button -->
+          <button class="dropdown-item" (click)="toggleTheme()">
+            <i class="fas" [class.fa-sun]="!(isDarkMode$ | async)" [class.fa-moon]="isDarkMode$ | async"></i>
+            {{(isDarkMode$ | async) ? 'Light Mode' : 'Dark Mode'}}
+          </button>
+          <!-- Logout Button -->
+          <button class="dropdown-item" (click)="logout()">
+            <i class="fas fa-sign-out-alt"></i>
+            Logout
+          </button>
+        </div>
+      </div>
+    </div>
+  </nav>
+
+  <!-- Main Content Area -->
+  <main class="main-content">
+    <!-- Welcome Section with Animation -->
+    <div class="welcome-section" [@fadeIn]>
+      <h2>Welcome, {{username}}!</h2>
+      <p class="role-badge">{{role}}</p>
+    </div>
+
+    <!-- Admin Dashboard - Visible only for admin users -->
+    <div *ngIf="role === 'admin'" class="admin-dashboard" [@fadeIn]>
+      <div class="admin-actions">
+        <!-- Admin Action Buttons -->
+        <button class="admin-button">
+          <i class="fas fa-book"></i>
+          Manage Books
+        </button>
+        <button class="admin-button">
+          <i class="fas fa-users"></i>
+          Manage Users
+        </button>
+        <button class="admin-button">
+          <i class="fas fa-chart-bar"></i>
+          Sales Reports
+        </button>
+        <button class="admin-button">
+          <i class="fas fa-box"></i>
+          Inventory
+        </button>
+      </div>
+    </div>
+
+    <!-- User Dashboard - Visible only for regular users -->
+    <div *ngIf="role === 'user'" class="user-dashboard">
+      <!-- Search Results Section -->
+      <div class="search-results" *ngIf="searchQuery">
+        <!-- Search results will be displayed here -->
+      </div>
+
+      <!-- Book Grid Section -->
+      <div class="book-grid" *ngIf="!searchQuery">
+        <!-- Book listings will be displayed here -->
+      </div>
+    </div>
+  </main>
+</div>

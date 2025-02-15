@@ -1,0 +1,8 @@
+{
+  // This file contains recommended VS Code extensions for this project
+  // The 'recommendations' array lists extensions that are suggested for installation
+  // Currently recommending the Angular Language Service extension (angular.ng-template)
+  // This extension provides rich editing features for Angular templates and TypeScript code
+  // For more information, visit: https://go.microsoft.com/fwlink/?linkid=827846
+  "recommendations": ["angular.ng-template"]
+}
