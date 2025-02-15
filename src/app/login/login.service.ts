@@ -6,7 +6,7 @@ import {
   UserSession,
 } from './login.interface';
 import { Observable, throwError } from 'rxjs';
-import { catchError, map } from 'rxjs/operators';
+import { catchError, map, tap } from 'rxjs/operators';
 
 import { Injectable } from '@angular/core';
 import { environment } from '../../environments/environment';
@@ -21,11 +21,13 @@ export class LoginService {
 
   login(credentials: LoginCredentials): Observable<LoginResponse> {
     return this.http.post<LoginResponse>(this.apiUrl, credentials).pipe(
-      map((response) => {
+      tap((response) => {
         if (response.success && response.user) {
-          localStorage.setItem('userSession', JSON.stringify(response.user));
+          // Store user data
+          localStorage.setItem('user', JSON.stringify(response));
+          // Store session flag
+          localStorage.setItem('isLoggedIn', 'true');
         }
-        return response;
       }),
       catchError(this.handleError)
     );
@@ -41,10 +43,9 @@ export class LoginService {
       // Server-side error
       if (error.status === 401) {
         errorMessage = 'Invalid username or password';
-      } else if (error.status === 429) {
-        errorMessage = 'Too many login attempts. Please try again later.';
       } else {
-        errorMessage = error.error?.message || 'Server error';
+        errorMessage =
+          error.error?.error || error.error?.message || 'Server error';
       }
     }
 
@@ -58,15 +59,16 @@ export class LoginService {
   }
 
   logout(): void {
-    localStorage.removeItem('userSession');
+    localStorage.removeItem('user');
+    localStorage.removeItem('isLoggedIn');
   }
 
   isLoggedIn(): boolean {
-    return !!localStorage.getItem('userSession');
+    return localStorage.getItem('isLoggedIn') === 'true';
   }
 
   getCurrentUser(): UserSession | null {
-    const session = localStorage.getItem('userSession');
-    return session ? JSON.parse(session) : null;
+    const userData = localStorage.getItem('user');
+    return userData ? JSON.parse(userData) : null;
   }
 }
