@@ -1,10 +1,11 @@
 import { Component, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { Router } from '@angular/router';
+import { Observable } from 'rxjs';
+import { trigger, transition, style, animate } from '@angular/animations';
 import { LoginService } from './login.service';
 import { LoginError } from './login.interface';
 import { ModalService } from '../shared/services/modal.service';
-import { trigger, transition, style, animate } from '@angular/animations';
 
 @Component({
   selector: 'app-login',
@@ -40,38 +41,47 @@ export class LoginComponent implements OnInit {
   }
 
   ngOnInit(): void {
+    // Check if already logged in
     if (this.loginService.isLoggedIn()) {
       this.router.navigate(['/dashboard']);
     }
   }
 
   onSubmit(): void {
-    if (this.loginForm.valid) {
+    if (this.loginForm.valid && !this.isLoading) {
       this.isLoading = true;
       this.errorMessage = '';
 
-      this.loginService.login(this.loginForm.value).subscribe({
+      const credentials = this.loginForm.value;
+      console.log('Attempting login with:', credentials);
+
+      this.loginService.login(credentials).subscribe({
         next: (response) => {
+          console.log('Login response:', response);
           if (response.success) {
-            // Store user data in localStorage
-            localStorage.setItem('user', JSON.stringify(response.user));
-            
             this.modalService.showModal({
               type: 'success',
               message: 'Login successful! Redirecting...'
             });
             
-            // Add animation delay before navigation
+            // Navigate after a short delay
             setTimeout(() => {
-              this.router.navigate(['/dashboard']);
-            }, 800);
+              this.router.navigate(['/dashboard'])
+                .then(() => console.log('Navigation successful'))
+                .catch(err => console.error('Navigation failed:', err));
+            }, 500);
+          } else {
+            this.errorMessage = response.message || 'Login failed';
+            this.isLoading = false;
           }
         },
         error: (error: LoginError) => {
+          console.error('Login error:', error);
           this.modalService.showModal({
             type: 'error',
-            message: error.message
+            message: error.message || 'An error occurred during login'
           });
+          this.errorMessage = error.message || 'An error occurred during login';
           this.isLoading = false;
         },
         complete: () => {

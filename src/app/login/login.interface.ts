@@ -6,6 +6,7 @@ export interface LoginCredentials {
 export interface UserSession {
   userId: string;
   username: string;
+  role: string;
   createdAt: string;
   lastLogin: string;
 }
