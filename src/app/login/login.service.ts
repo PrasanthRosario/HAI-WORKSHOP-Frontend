@@ -1,21 +1,27 @@
-import { Injectable } from '@angular/core';
 import { HttpClient, HttpErrorResponse } from '@angular/common/http';
+import {
+  LoginCredentials,
+  LoginError,
+  LoginResponse,
+  UserSession,
+} from './login.interface';
 import { Observable, throwError } from 'rxjs';
 import { catchError, map } from 'rxjs/operators';
-import { LoginCredentials, LoginResponse, LoginError, UserSession } from './login.interface';
+
+import { Injectable } from '@angular/core';
 import { environment } from '../../environments/environment';
 
 @Injectable({
-  providedIn: 'root'
+  providedIn: 'root',
 })
 export class LoginService {
-  private readonly apiUrl = `${environment.apiUrl}/api/auth/login`;
+  private readonly apiUrl = `${environment.apiUrl}/users/login`;
 
   constructor(private http: HttpClient) {}
 
   login(credentials: LoginCredentials): Observable<LoginResponse> {
     return this.http.post<LoginResponse>(this.apiUrl, credentials).pipe(
-      map(response => {
+      map((response) => {
         if (response.success && response.user) {
           localStorage.setItem('userSession', JSON.stringify(response.user));
         }
@@ -27,7 +33,7 @@ export class LoginService {
 
   private handleError(error: HttpErrorResponse): Observable<never> {
     let errorMessage = 'An error occurred';
-    
+
     if (error.error instanceof ErrorEvent) {
       // Client-side error
       errorMessage = error.error.message;
@@ -42,10 +48,13 @@ export class LoginService {
       }
     }
 
-    return throwError(() => ({
-      message: errorMessage,
-      statusCode: error.status
-    } as LoginError));
+    return throwError(
+      () =>
+        ({
+          message: errorMessage,
+          statusCode: error.status,
+        } as LoginError)
+    );
   }
 
   logout(): void {
