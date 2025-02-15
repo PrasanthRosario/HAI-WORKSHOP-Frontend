@@ -19,10 +19,10 @@ export class LoginService {
 
   constructor(private http: HttpClient) {}
 
-  login(credentials: LoginCredentials): Observable<LoginResponse> {
-    return this.http.post<LoginResponse>(this.apiUrl, credentials).pipe(
+  login(credentials: LoginCredentials): Observable<UserSession> {
+    return this.http.post<UserSession>(this.apiUrl, credentials).pipe(
       tap((response) => {
-        if (response.success && response.user) {
+        if (response.success) {
           // Store user data
           localStorage.setItem('user', JSON.stringify(response));
           // Store session flag

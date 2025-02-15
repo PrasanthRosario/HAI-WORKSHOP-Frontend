@@ -9,6 +9,7 @@ export interface UserSession {
   role: 'user' | 'admin';
   createdAt: string;
   lastLogin: string;
+  success: boolean;
 }
 
 export interface LoginResponse {

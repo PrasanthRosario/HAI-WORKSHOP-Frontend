@@ -72,17 +72,25 @@ export class LoginComponent implements OnInit {
               type: 'success',
               message: 'Login successful! Redirecting...',
             });
-            
+
             // Navigate after a short delay
 
             // Add animation delay before navigation
             setTimeout(() => {
-              this.router.navigate(['/dashboard'])
-                .then(() => console.log('Navigation successful'))
-                .catch(err => console.error('Navigation failed:', err));
+              if (response.role === 'admin') {
+                this.router
+                  .navigate(['/orders'])
+                  .then(() => console.log('Navigation successful'))
+                  .catch((err) => console.error('Navigation failed:', err));
+              } else {
+                this.router
+                  .navigate(['/dashboard'])
+                  .then(() => console.log('Navigation successful'))
+                  .catch((err) => console.error('Navigation failed:', err));
+              }
             }, 500);
           } else {
-            this.errorMessage = response.message || 'Login failed';
+            this.errorMessage = 'Login failed';
             this.isLoading = false;
           }
         },
@@ -90,7 +98,7 @@ export class LoginComponent implements OnInit {
           console.error('Login error:', error);
           this.modalService.showModal({
             type: 'error',
-            message: error.message || 'An error occurred during login'
+            message: error.message || 'An error occurred during login',
           });
           this.errorMessage = error.message || 'An error occurred during login';
           this.isLoading = false;
