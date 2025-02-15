@@ -20,6 +20,8 @@ export class OrdersComponent implements OnInit {
   statusFilter: OrderStatus | 'ALL' = 'ALL';
   sortField: SortableFields = 'date';
   sortDirection: 'asc' | 'desc' = 'desc';
+  isUpdating: boolean = false;
+  updateError: string | null = null;
 
   constructor(
     private ordersService: OrdersService,
@@ -124,6 +126,36 @@ export class OrdersComponent implements OnInit {
     });
   }
 
+  onStatusChange(orderId: string, event: Event): void {
+    const select = event.target as HTMLSelectElement;
+    const newStatus = select.value as OrderStatus;
+    this.updateOrderStatus(orderId, newStatus);
+  }
+
+  private updateOrderStatus(orderId: string, newStatus: OrderStatus): void {
+    this.isUpdating = true;
+    this.updateError = null;
+
+    this.ordersService.updateOrderStatus(orderId, newStatus).subscribe({
+      next: (response) => {
+        if (response.success && response.order) {
+          // Update the order status in the local array
+          const orderIndex = this.orders.findIndex(o => o.orderId === orderId);
+          if (orderIndex !== -1) {
+            this.orders[orderIndex].status = response.order.status;
+            this.applyFilters();
+          }
+        }
+      },
+      error: (error) => {
+        this.updateError = error.message;
+      },
+      complete: () => {
+        this.isUpdating = false;
+      }
+    });
+  }
+
   getStatusClass(status: OrderStatus): string {
     switch (status) {
       case OrderStatus.PENDING: return 'status-pending';
@@ -133,5 +165,33 @@ export class OrdersComponent implements OnInit {
       case OrderStatus.CANCELLED: return 'status-cancelled';
       default: return '';
     }
+  }
+
+  canUpdateStatus(currentStatus: OrderStatus): boolean {
+    const currentUser = this.loginService.getCurrentUser();
+    if (!currentUser) return false;
+
+    // Only admin can update any status
+    if (currentUser.role === 'admin') return true;
+
+    // Users can only cancel pending orders
+    return currentStatus === OrderStatus.PENDING;
+  }
+
+  getAvailableStatuses(currentStatus: OrderStatus): OrderStatus[] {
+    const currentUser = this.loginService.getCurrentUser();
+    if (!currentUser) return [];
+
+    if (currentUser.role === 'admin') {
+      // Admin can set any status except the current one
+      return Object.values(OrderStatus).filter(status => status !== currentStatus);
+    }
+
+    // Users can only cancel pending orders
+    if (currentStatus === OrderStatus.PENDING) {
+      return [OrderStatus.CANCELLED];
+    }
+
+    return [];
   }
 }

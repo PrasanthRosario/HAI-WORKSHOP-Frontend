@@ -1,4 +1,4 @@
-<div class="orders-container">
+<div class="orders-container w-100">
   <header class="orders-header">
     <h1>Orders</h1>
     <div class="filters">
@@ -27,6 +27,11 @@
       {{ error }}
     </div>
 
+    <div *ngIf="updateError" class="error-message update-error">
+      <i class="fas fa-exclamation-triangle"></i>
+      {{ updateError }}
+    </div>
+
     <div *ngIf="!isLoading && !error" class="orders-table-container">
       <table class="orders-table">
         <thead>
@@ -51,9 +56,26 @@
             <td>{{ order.bookTitle }}</td>
             <td>{{ formatDate(order.date) }}</td>
             <td>
-              <span class="status-badge" [ngClass]="getStatusClass(order.status)">
-                {{ order.status }}
-              </span>
+              <div class="status-container">
+                <span class="status-badge" [ngClass]="getStatusClass(order.status)">
+                  {{ order.status }}
+                </span>
+                <div class="status-actions" *ngIf="canUpdateStatus(order.status)">
+                  <select 
+                    [disabled]="isUpdating"
+                    (change)="onStatusChange(order.orderId, $event)"
+                    class="status-select"
+                  >
+                    <option value="" disabled selected>Change status</option>
+                    <option 
+                      *ngFor="let status of getAvailableStatuses(order.status)" 
+                      [value]="status"
+                    >
+                      {{ status }}
+                    </option>
+                  </select>
+                </div>
+              </div>
             </td>
             <td>{{ order.orderId }}</td>
           </tr>
