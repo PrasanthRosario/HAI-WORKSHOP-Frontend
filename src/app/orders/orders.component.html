@@ -1,0 +1,70 @@
+<div class="orders-container">
+  <header class="orders-header">
+    <h1>Orders</h1>
+    <div class="filters">
+      <div class="filter-group">
+        <label>Status:</label>
+        <select [(ngModel)]="statusFilter" (change)="onStatusFilterChange($event)">
+          <option value="ALL">All</option>
+          <option [value]="OrderStatus.PENDING">Pending</option>
+          <option [value]="OrderStatus.PROCESSING">Processing</option>
+          <option [value]="OrderStatus.SHIPPED">Shipped</option>
+          <option [value]="OrderStatus.DELIVERED">Delivered</option>
+          <option [value]="OrderStatus.CANCELLED">Cancelled</option>
+        </select>
+      </div>
+    </div>
+  </header>
+
+  <div class="orders-content">
+    <div *ngIf="isLoading" class="loading-spinner">
+      <i class="fas fa-spinner fa-spin"></i>
+      Loading orders...
+    </div>
+
+    <div *ngIf="error" class="error-message">
+      <i class="fas fa-exclamation-circle"></i>
+      {{ error }}
+    </div>
+
+    <div *ngIf="!isLoading && !error" class="orders-table-container">
+      <table class="orders-table">
+        <thead>
+          <tr>
+            <th (click)="onSortChange('bookTitle')">
+              Book Title
+              <i class="fas" [ngClass]="getSortIcon('bookTitle')"></i>
+            </th>
+            <th (click)="onSortChange('date')">
+              Order Date
+              <i class="fas" [ngClass]="getSortIcon('date')"></i>
+            </th>
+            <th (click)="onSortChange('status')">
+              Status
+              <i class="fas" [ngClass]="getSortIcon('status')"></i>
+            </th>
+            <th>Order ID</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr *ngFor="let order of filteredOrders">
+            <td>{{ order.bookTitle }}</td>
+            <td>{{ formatDate(order.date) }}</td>
+            <td>
+              <span class="status-badge" [ngClass]="getStatusClass(order.status)">
+                {{ order.status }}
+              </span>
+            </td>
+            <td>{{ order.orderId }}</td>
+          </tr>
+          <tr *ngIf="filteredOrders.length === 0">
+            <td colspan="4" class="no-orders">
+              <i class="fas fa-inbox"></i>
+              No orders found
+            </td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+  </div>
+</div>

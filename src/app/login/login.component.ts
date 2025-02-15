@@ -1,10 +1,11 @@
 import { Component, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
-import { Router } from '@angular/router';
-import { LoginService } from './login.service';
+import { animate, style, transition, trigger } from '@angular/animations';
+
 import { LoginError } from './login.interface';
+import { LoginService } from './login.service';
 import { ModalService } from '../shared/services/modal.service';
-import { trigger, transition, style, animate } from '@angular/animations';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-login',
@@ -14,13 +15,19 @@ import { trigger, transition, style, animate } from '@angular/animations';
     trigger('fadeInOut', [
       transition(':enter', [
         style({ opacity: 0, transform: 'translateY(-20px)' }),
-        animate('300ms ease-out', style({ opacity: 1, transform: 'translateY(0)' }))
+        animate(
+          '300ms ease-out',
+          style({ opacity: 1, transform: 'translateY(0)' })
+        ),
       ]),
       transition(':leave', [
-        animate('300ms ease-in', style({ opacity: 0, transform: 'translateY(-20px)' }))
-      ])
-    ])
-  ]
+        animate(
+          '300ms ease-in',
+          style({ opacity: 0, transform: 'translateY(-20px)' })
+        ),
+      ]),
+    ]),
+  ],
 })
 export class LoginComponent implements OnInit {
   loginForm: FormGroup;
@@ -35,7 +42,7 @@ export class LoginComponent implements OnInit {
   ) {
     this.loginForm = this.formBuilder.group({
       username: ['', [Validators.required, Validators.minLength(3)]],
-      password: ['', [Validators.required, Validators.minLength(8)]]
+      password: ['', [Validators.required, Validators.minLength(8)]],
     });
   }
 
@@ -54,13 +61,13 @@ export class LoginComponent implements OnInit {
         next: (response) => {
           if (response.success) {
             // Store user data in localStorage
-            localStorage.setItem('user', JSON.stringify(response.user));
-            
+            localStorage.setItem('user', JSON.stringify(response));
+            console.log(response);
             this.modalService.showModal({
               type: 'success',
-              message: 'Login successful! Redirecting...'
+              message: 'Login successful! Redirecting...',
             });
-            
+
             // Add animation delay before navigation
             setTimeout(() => {
               this.router.navigate(['/dashboard']);
@@ -70,13 +77,13 @@ export class LoginComponent implements OnInit {
         error: (error: LoginError) => {
           this.modalService.showModal({
             type: 'error',
-            message: error.message
+            message: error.message,
           });
           this.isLoading = false;
         },
         complete: () => {
           this.isLoading = false;
-        }
+        },
       });
     } else {
       this.markFormGroupTouched(this.loginForm);
@@ -84,7 +91,7 @@ export class LoginComponent implements OnInit {
   }
 
   private markFormGroupTouched(formGroup: FormGroup): void {
-    Object.values(formGroup.controls).forEach(control => {
+    Object.values(formGroup.controls).forEach((control) => {
       control.markAsTouched();
       if (control instanceof FormGroup) {
         this.markFormGroupTouched(control);
@@ -96,10 +103,16 @@ export class LoginComponent implements OnInit {
     const control = this.loginForm.get(controlName);
     if (control?.errors) {
       if (control.errors['required']) {
-        return `${controlName.charAt(0).toUpperCase() + controlName.slice(1)} is required`;
+        return `${
+          controlName.charAt(0).toUpperCase() + controlName.slice(1)
+        } is required`;
       }
       if (control.errors['minlength']) {
-        return `${controlName.charAt(0).toUpperCase() + controlName.slice(1)} must be at least ${control.errors['minlength'].requiredLength} characters`;
+        return `${
+          controlName.charAt(0).toUpperCase() + controlName.slice(1)
+        } must be at least ${
+          control.errors['minlength'].requiredLength
+        } characters`;
       }
     }
     return '';
